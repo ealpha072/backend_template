@@ -8,6 +8,10 @@ logger.info('hello')
 
 const app = express()
 app.use(middleware.requestLogger)
-app.use(cors())
 
-app.listen()
+app.listen(config.PORT, ()=>{logger.info(`Server listening on port ${config.PORT}`)})
+
+app.use(cors())
+app.use(express.json())
+app.use(middleware.ignoreFavicon)
+app.use(middleware.unknownEndpoint)
