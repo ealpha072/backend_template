@@ -1,6 +1,5 @@
-import dotenv from 'dotenv'
-dotenv.config({path:'./.env'})
-const PORT = process.env.PORT
+import dotenv from "dotenv";
+dotenv.config({ path: "./.env" });
 
-export default {PORT}
-
+const PORT = process.env.PORT || 5000;
+export default { PORT };
