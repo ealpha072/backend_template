@@ -16,7 +16,6 @@ const unknownEndpoint = (req, res) => {
 const ignoreFavicon = (req, res, next) => {
   if (req.originalUrl.includes("/favicon.ico")) {
     res.status(200).end();
-
     next();
   }
 };

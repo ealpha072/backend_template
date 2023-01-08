@@ -1,23 +1,23 @@
-import config from "./utils/config.js";
-import express from "express";
-import logger from "./utils/logger.js";
-import middleware from "./utils/middleware.js";
-import appRoute from "./routes/route.js";
-import cors from "cors";
-import morgan from "morgan";
+import express from 'express'
+import config from './utils/config.js'
+import cors from 'cors'
+import logger from './utils/logger.js'
+import middlelware from './utils/middleware.js'
 
-logger.info("Attempting connection to local host");
+logger.info('Attempting connectiong ot localhost')
 
-const app = express();
+const app =  express()
+const PORT = config.PORT
 
-app.use(cors());
-app.use(express.json());
-app.use(middleware.requestLogger);
-app.use(middleware.ignoreFavicon)
+app.listen(PORT, () => {
+  logger.info(`Server listening on port ${PORT}`)
+})
 
-app.use(middleware.unknownEndpoint);
-app.use(middleware.errorHandler);
+app.use(express.json())
+app.use(middlelware.requestLogger)
 
-app.listen(config.PORT, () => {
-  logger.info(`Server listening on port ${config.PORT}`);
-});
+app.get('/', (req, res) => {
+  res.send('Good morning')
+})
+
+app.use(middlelware.unknownEndpoint)
