@@ -22,7 +22,6 @@ const ignoreFavicon = (req, res, next) => {
 
 const errorHandler = (error, req, res, next) => {
   logger.error(error.message);
-
   next(error);
 };
 
