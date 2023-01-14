@@ -1,5 +1,6 @@
 import express from "express";
 import User from "../models/user.js";
+import bcrypt from "bcryptjs";
 const appRoute = express.Router();
 
 appRoute.get("/", (req, res) => {
@@ -11,6 +12,24 @@ appRoute.get("/users", async (req, res, next) => {
     const users = await User.find();
     res.json({ users: users });
   } catch (error) {
+    next(error);
+  }
+});
+
+appRoute.post("/register", async (req, res, next) => {
+  const { email, username, password } = req.body;
+
+  try {
+    //see if user exists
+    const userExists = User.findOne({ email: email });
+    if (!userExists) {
+      const saltRounds = 10;
+      const passwordHash = await bcrypt.hash(saltRounds, password);
+    } else {
+      res.status(400).json({error: "User already exists"})
+    }
+  } catch (error) {
+    console.log(error.message);
     next(error);
   }
 });
