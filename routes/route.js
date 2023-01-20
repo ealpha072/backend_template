@@ -37,12 +37,20 @@ appRoute.post("/register", async (req, res, next) => {
   }
 });
 
-appRoute.get('/login', async(req, res, next) => {
+appRoute.get("/login", async (req, res, next) => {
   try {
+    const { email, password } = req.body;
+    const findUser = await User.find({email: email});
+    const checkPassword = findUser === null ? false : await bcrypt.compare(password, passwordHash)
     
+    if (!(findUser && checkPassword)){
+      res.status(400).json({error: "Incorrect password or email, check and try again"})
+    }else{
+      res.status(400).json({message: "Successful login"})
+    }
   } catch (error) {
-    console.log{error.message)
-    next(error)
+    console.log(error.message);
+    next(error);
   }
 });
 
