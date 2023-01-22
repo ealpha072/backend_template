@@ -18,7 +18,6 @@ appRoute.get("/users", async (req, res, next) => {
 
 appRoute.post("/register", async (req, res, next) => {
   const { email, username, password } = req.body;
-
   try {
     //see if user exists
     const userExists = User.findOne({ email: email });
@@ -38,8 +37,9 @@ appRoute.post("/register", async (req, res, next) => {
 });
 
 appRoute.get("/login", async (req, res, next) => {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
+    //check user
     const findUser = await User.find({ email: email });
     const checkPassword =
       findUser === null ? false : await bcrypt.compare(password, passwordHash);
